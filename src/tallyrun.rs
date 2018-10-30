@@ -30,7 +30,11 @@ fn basename_nogz(filepath: &str) -> OsString {
 	};
 	
 	let path = Path::new(filepath);
-	path.file_stem().unwrap_or(path.file_name().expect("Failed to extract filename from path.")).to_os_string()
+    let parent = path.parent().unwrap();
+    let filebase = path.file_stem().unwrap_or(path.file_name().expect("Failed to extract filename from path."));
+    let newpath = OsString::from(parent.join(filebase));
+    newpath
+	//path.file_stem().unwrap_or(path.file_name().expect("Failed to extract filename from path.")).to_os_string()
 }
 
 
